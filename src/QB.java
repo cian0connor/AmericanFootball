@@ -3,9 +3,9 @@ public class QB extends Player {
     private int throwingPower;
     private int throwingAccuracy;
 
-    public QB(String name, Team team, int age, int throwingPower, int throwingAccuracy)
+    public QB(String name, Team team, int age, double height, int throwingPower, int throwingAccuracy)
     {
-        super(name,team,age);
+        super(name,team,age,height);
         this.throwingAccuracy = throwingAccuracy;
         this.throwingPower = throwingPower;
     }
@@ -30,7 +30,8 @@ public class QB extends Player {
     }
 
     @Override
-    public String toString() {
-        return super.toString() + "\nPower: " + getThrowingPower() + "\nAccuracy"
+    public String toString()
+    {
+        return super.toString() + "\nPower: " + getThrowingPower() + "\nAccuracy: " + getThrowingAccuracy();
     }
 }

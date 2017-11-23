@@ -2,12 +2,14 @@ public abstract class Player implements Interface {
     private String name;
     private Team team;
     private int age;
+    private double height;
 
 
-    public Player(String name, Team team, int age) {
+    public Player(String name, Team team, int age, double height) {
         this.name = name;
         this.team = team;
         this.age = age;
+        this.height = height;
     }
 
     public String getName()
@@ -40,10 +42,20 @@ public abstract class Player implements Interface {
         this.age = age;
     }
 
+    public double getHeight()
+    {
+        return height;
+    }
+
+    public void setHeight(double height)
+    {
+        this.height = height;
+    }
+
     @Override
     public String toString()
     {
-        return "Player Name: " + getName() + "\nAge: " + getAge() + "\n" + team.toString();
+        return "Player Name: " + getName() + "\nAge: " + getAge() + "\n" + "\nHeight: " + getHeight() + "\n" + team.toString();
     }
 
     public void runPlay()
