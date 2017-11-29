@@ -7,10 +7,15 @@ import java.awt.event.*;
 public class GUI extends JFrame implements ActionListener {
     //Setting required variable to build my GUI
     private JFrame menu = new JFrame();
+    private JFrame gameScreen = new JFrame();
+    private ImageIcon gamePic;
     private ImageIcon pic;
     private JLabel imgLable;
+    private JLabel gameImgLable;
     private JMenuBar topMenu = new JMenuBar();
+    private JMenuBar playMenu = new JMenuBar();
     private JMenu gameMenu;
+    private JMenu playingMenu;
 
 
     public static void main(String[] args) {
@@ -40,6 +45,25 @@ public class GUI extends JFrame implements ActionListener {
 
         menu.setVisible(true);
 
+        gameScreen.setTitle("American Football");
+        gameScreen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        gameScreen.setSize(1334,599);
+        Dimension dimen = Toolkit.getDefaultToolkit().getScreenSize();
+        gameScreen.setLocation(dimen.width/2-menu.getSize().width/2, dimen.height/2-menu.getSize().height/2);
+        //taken from https://stackoverflow.com/questions/2442599/how-to-set-jframe-to-appear-centered-regardless-of-monitor-resolution
+        //Opens GUI in the middle of any screen
+        gameScreen.setJMenuBar(playMenu);
+        gameScreen.setLayout(new FlowLayout());
+        gamePic = new ImageIcon("src//images//field.png");
+        //Grabs background from local images folder
+        gameImgLable = new JLabel(gamePic);
+        gameScreen.add(gameImgLable);
+        createPlayMenu();
+        playMenu.add(playingMenu);
+
+
+        gameScreen.setVisible(false);
+
     }
     private void createGameMenu()
     {
@@ -48,9 +72,6 @@ public class GUI extends JFrame implements ActionListener {
         // declare a menu item (re-usable)
         JMenuItem item;
         item = new JMenuItem("New Game");
-        item.addActionListener(this);
-        gameMenu.add(item);
-        item = new JMenuItem("Save");
         item.addActionListener(this);
         gameMenu.add(item);
         item = new JMenuItem("Load");
@@ -62,19 +83,39 @@ public class GUI extends JFrame implements ActionListener {
         gameMenu.add(item);
     }
 
+    private void createPlayMenu()
+    {
+        // create the menu
+        playingMenu = new JMenu("Game");
+        // declare a menu item (re-usable)
+        JMenuItem item;
+        item = new JMenuItem("Save");
+        item.addActionListener(this);
+        playingMenu.add(item);
+        playingMenu.addSeparator();
+        item = new JMenuItem("Quit");
+        item.addActionListener(this);
+        playingMenu.add(item);
+    }
+
     public void actionPerformed (ActionEvent e) {
         if (e.getActionCommand().equals ("Quit"))
         {
+            menu.setVisible(false);
             JOptionPane.showMessageDialog(null,"Goodbye");
             System.exit(0);
         }
         else if (e.getActionCommand().equals("New Game"))
         {
             menu.setVisible(false);
+            gameScreen.setVisible(true);
             playGame();
         }
 
+
     }
+
+    static Player[] team = new Player[3];
 
     public void playGame() {
         int DefScore = 0;
@@ -83,11 +124,13 @@ public class GUI extends JFrame implements ActionListener {
         int QBChoice;
         int WRChoice;
         int CBChoice;
+        int save;
+        boolean saveAsked = false;
         String QBChoiceAsString;
         String WRChoiceAsString;
         String CBChoiceAsString;
 
-        Player[] team = new Player[3];
+
 
         for (int j = 0; j < 3; j++) {
             if (j == 0) {
@@ -228,8 +271,25 @@ public class GUI extends JFrame implements ActionListener {
             int reply = JOptionPane.showConfirmDialog(null, "Would you like to run a play?", "Run Play", JOptionPane.YES_NO_OPTION);
 
             if (reply == JOptionPane.NO_OPTION) {
-                menu.setVisible(true);
-                break;
+                save = JOptionPane.showConfirmDialog(null,"Would you like to save your team?","Save Team?",JOptionPane.YES_NO_OPTION);
+                saveAsked = true;
+                if (save == JOptionPane.NO_OPTION)
+                {
+                    gameScreen.setVisible(false);
+                    menu.setVisible(true);
+                    break;
+                }
+                else
+                {
+                    try {
+                        SaveLoad.saveTeam();
+                    } catch (Exception e1) {
+                        JOptionPane.showMessageDialog(null, "Error!");
+                    }
+                    gameScreen.setVisible(false);
+                    menu.setVisible(true);
+                    break;
+                }
             } else {
                 plays++;
                 if (offSkill > defSkill) {
@@ -264,6 +324,35 @@ public class GUI extends JFrame implements ActionListener {
         }
 
         JOptionPane.showMessageDialog(null, team[0].toString() + "\n\n" + team[1].toString() + "\n\n" + team[2].toString() + "\n\nNo. of Plays:  "+ plays +"\n\n\tFinal Score\nOffense " + OffScore + " - " + DefScore + " Defense");
+        if(!saveAsked)
+        {
+            save = JOptionPane.showConfirmDialog(null, "Would you like to save your team?", "Save Team?", JOptionPane.YES_NO_OPTION);
+            if (save == JOptionPane.NO_OPTION)
+            {
+                gameScreen.setVisible(false);
+                menu.setVisible(true);
+            }
+
+            else
+            {
+                try {
+                    SaveLoad.saveTeam();
+                } catch (Exception e1) {
+                    JOptionPane.showMessageDialog(null, "Error!");
+                }
+                gameScreen.setVisible(false);
+                menu.setVisible(true);
+            }
+
+        }
+
+        else
+        {
+            gameScreen.setVisible(false);
+            menu.setVisible(true);
+        }
+
+
     }
 
 
