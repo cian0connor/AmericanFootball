@@ -19,6 +19,6 @@ public class Team {
     @Override
     public String toString()
     {
-        return "Team = " + teamName;
+        return "Team: " + teamName;
     }
 }

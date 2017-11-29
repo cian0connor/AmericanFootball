@@ -1,3 +1,5 @@
 public interface Interface {
-    void runPlay();
+    int getOffSkill(Player y);
+
+    int getDefSkill();
 }

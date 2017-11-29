@@ -3,6 +3,11 @@ public abstract class Player implements Interface {
     private Team team;
     private int age;
     private double height;
+    private int throwingPower;
+    private int throwingAccuracy;
+    private int catching;
+    private int speed;
+    private int covering;
 
 
     public Player(String name, Team team, int age, double height) {
@@ -52,14 +57,49 @@ public abstract class Player implements Interface {
         this.height = height;
     }
 
+    public int getThrowingPower()
+    {
+        return throwingPower;
+    }
+
+    public int getThrowingAccuracy()
+    {
+        return throwingAccuracy;
+    }
+
+    public int getCatching()
+    {
+        return catching;
+    }
+
+    public int getSpeed()
+    {
+        return speed;
+    }
+
+    public int getCovering()
+    {
+        return covering;
+    }
+
+    public int getOffSkill(Player y)
+    {
+        int offSkill = ((this.getThrowingPower() + this.getThrowingAccuracy()) + (y.getCatching()+y.getSpeed()));
+        return offSkill;
+    }
+
+    public int getDefSkill()
+    {
+        int defSkill = ((this.getCovering() + this.getSpeed())) * 2;
+        return defSkill;
+    }
+
+
     @Override
     public String toString()
     {
-        return "Player Name: " + getName() + "\nAge: " + getAge() + "\n" + "\nHeight: " + getHeight() + "\n" + team.toString();
+        return "Player Name: " + getName() + "\nAge: " + getAge() + "\n" + "Height: " + getHeight() + "m\n" + team.toString();
     }
 
-    public void runPlay()
-    {
 
-    }
 }

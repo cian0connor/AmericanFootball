@@ -10,7 +10,8 @@ public class QB extends Player {
         this.throwingPower = throwingPower;
     }
 
-    public int getThrowingPower() {
+    public int getThrowingPower()
+    {
         return throwingPower;
     }
 
@@ -29,9 +30,15 @@ public class QB extends Player {
         this.throwingAccuracy = throwingAccuracy;
     }
 
+    public int getOffSkill(Player y)
+    {
+        int offSkill = ((this.getThrowingPower() + this.getThrowingAccuracy()) + (y.getCatching()+y.getSpeed()));
+        return offSkill;
+    }
+
     @Override
     public String toString()
     {
-        return super.toString() + "\nPower: " + getThrowingPower() + "\nAccuracy: " + getThrowingAccuracy();
+        return super.toString() + "\nThrowing Power: " + getThrowingPower() + "\nThrowing Accuracy: " + getThrowingAccuracy();
     }
 }
