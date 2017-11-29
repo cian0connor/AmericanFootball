@@ -24,13 +24,13 @@ public class GUI extends JFrame implements ActionListener {
 
         menu.setTitle("American Football");
         menu.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        menu.setSize(600,400);
+        menu.setSize(1024,768);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         menu.setLocation(dim.width/2-menu.getSize().width/2, dim.height/2-menu.getSize().height/2);
         //taken from https://stackoverflow.com/questions/2442599/how-to-set-jframe-to-appear-centered-regardless-of-monitor-resolution
         menu.setJMenuBar(topMenu);
         menu.setLayout(new FlowLayout());
-        pic = new ImageIcon("src//images//American-Football.jpg");
+        pic = new ImageIcon("src//images//pic.jpg");
         imgLable = new JLabel(pic);
         menu.add(imgLable);
         createFileMenu();
@@ -90,22 +90,20 @@ public class GUI extends JFrame implements ActionListener {
         for (int j = 0; j < 3; j++) {
             if (j == 0) {
                 boolean validChoice = false;
-                //boolean validEntry = false;
+
                 while (!validChoice) {
-                    QBChoice = Integer.parseInt(JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n"));
-                    //while (!validEntry)
-                    //{
-                    // QBChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford");
-                    //if (!Character.isDigit(QBChoiceAsString.charAt(0)))
-                    //{
-                    // JOptionPane.showMessageDialog(null, "Invalid input");
-                    //}
-                    // else
-                    //{
-                    //QBChoice = Integer.parseInt(QBChoiceAsString);
-                    //validEntry = true;
-                    //}
-                    //}
+                    QBChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
+                    while (!QBChoiceAsString.equals("1") && !QBChoiceAsString.equals("2") && !QBChoiceAsString.equals("3") && !QBChoiceAsString.equals("4") && !QBChoiceAsString.equals("5"))
+                    {
+
+                        JOptionPane.showMessageDialog(null, "Invalid input");
+
+                        QBChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
+
+                    }
+
+                    QBChoice = Integer.parseInt(QBChoiceAsString);
+
                     if (QBChoice == 1) {
                         team[j] = new QB("Aaron Rodgers", new Team("Green Bay Packers"), 33, 1.88, 10, 10);
                         validChoice = true;
@@ -134,7 +132,18 @@ public class GUI extends JFrame implements ActionListener {
             } else if (j == 1) {
                 boolean validChoice = false;
                 while (!validChoice) {
-                    WRChoice = Integer.parseInt(JOptionPane.showInputDialog("Please select your Receiver\n\n" + "1.Antonio Brown\n" + "2.Julio Jones\n" + "3.Odell Beckham Jr.\n" + "4.A.J. Green\n" + "5.Dez Bryant\n"));
+                    WRChoiceAsString = JOptionPane.showInputDialog("Please select your Receiver\n\n" + "1.Antonio Brown\n" + "2.Julio Jones\n" + "3.Odell Beckham Jr.\n" + "4.A.J. Green\n" + "5.Dez Bryant\n");
+                    while (!WRChoiceAsString.equals("1") && !WRChoiceAsString.equals("2") && !WRChoiceAsString.equals("3") && !WRChoiceAsString.equals("4") && !WRChoiceAsString.equals("5"))
+                    {
+
+                        JOptionPane.showMessageDialog(null, "Invalid input");
+
+                        WRChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
+
+                    }
+
+                    WRChoice = Integer.parseInt(WRChoiceAsString);
+
                     if (WRChoice == 1) {
                         team[j] = new receiver("Antonio Brown", new Team("Pittsburgh Steelers"), 29, 1.78, 10, 8);
                         validChoice = true;
@@ -157,7 +166,17 @@ public class GUI extends JFrame implements ActionListener {
             } else if (j == 2) {
                 boolean validChoice = false;
                 while (!validChoice) {
-                    CBChoice = Integer.parseInt(JOptionPane.showInputDialog("Please select your Defender\n\n" + "1.Patrick Peterson\n" + "2.Richard Sherman\n" + "3.Janoris Jenkins\n" + "4.Aqib Talib\n" + "5.Chris Harris Jr.\n"));
+                    CBChoiceAsString = JOptionPane.showInputDialog("Please select your Defender\n\n" + "1.Patrick Peterson\n" + "2.Richard Sherman\n" + "3.Janoris Jenkins\n" + "4.Aqib Talib\n" + "5.Chris Harris Jr.\n");
+                    while (!CBChoiceAsString.equals("1") && !CBChoiceAsString.equals("2") && !CBChoiceAsString.equals("3") && !CBChoiceAsString.equals("4") && !CBChoiceAsString.equals("5"))
+                    {
+
+                        JOptionPane.showMessageDialog(null, "Invalid input");
+
+                        CBChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
+
+                    }
+
+                    CBChoice = Integer.parseInt(CBChoiceAsString);
                     if (CBChoice == 1) {
                         team[j] = new defender("Patrick Peterson", new Team("Arizona Cardinals"), 27, 1.85, 8, 8);
                         validChoice = true;
@@ -178,10 +197,11 @@ public class GUI extends JFrame implements ActionListener {
                     }
                 }
             }
+            plays = 0;
         }
 
         while (OffScore < 5 && DefScore < 5) {
-            plays = 0;
+
             int offSkill = team[0].getOffSkill(team[1]);
             int defSkill = team[2].getDefSkill();
             int reply = JOptionPane.showConfirmDialog(null, "Would you like to run a play?", "Run Play", JOptionPane.YES_NO_OPTION);
@@ -221,7 +241,7 @@ public class GUI extends JFrame implements ActionListener {
             }
         }
 
-        JOptionPane.showMessageDialog(null, team[0].toString() + "\n\n" + team[1].toString() + "\n\n" + team[2].toString() + "\n\n\tFinal Score\nOffense " + OffScore + " - " + DefScore + " Defense");
+        JOptionPane.showMessageDialog(null, team[0].toString() + "\n\n" + team[1].toString() + "\n\n" + team[2].toString() + "\n\n"+ plays +"\n\n\tFinal Score\nOffense " + OffScore + " - " + DefScore + " Defense");
     }
 
 
