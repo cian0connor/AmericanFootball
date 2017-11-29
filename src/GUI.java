@@ -112,6 +112,24 @@ public class GUI extends JFrame implements ActionListener {
             playGame();
         }
 
+        else if (e.getActionCommand().equals("Save"))
+        {
+            try {
+                SaveLoad.saveTeam();
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(null, "Error!");
+            }
+        }
+
+        else if (e.getActionCommand().equals("Load"))
+        {
+            try {
+                SaveLoad.loadTeam();
+            } catch (Exception e1) {
+                JOptionPane.showMessageDialog(null, "Error!");
+            }
+        }
+
 
     }
 
@@ -271,7 +289,7 @@ public class GUI extends JFrame implements ActionListener {
             int reply = JOptionPane.showConfirmDialog(null, "Would you like to run a play?", "Run Play", JOptionPane.YES_NO_OPTION);
 
             if (reply == JOptionPane.NO_OPTION) {
-                save = JOptionPane.showConfirmDialog(null,"Would you like to save your team?","Save Team?",JOptionPane.YES_NO_OPTION);
+                save = JOptionPane.showConfirmDialog(null,"Would you like to save your team details?","Save Team?",JOptionPane.YES_NO_OPTION);
                 saveAsked = true;
                 if (save == JOptionPane.NO_OPTION)
                 {
@@ -286,8 +304,7 @@ public class GUI extends JFrame implements ActionListener {
                     } catch (Exception e1) {
                         JOptionPane.showMessageDialog(null, "Error!");
                     }
-                    gameScreen.setVisible(false);
-                    menu.setVisible(true);
+
                     break;
                 }
             } else {
@@ -326,7 +343,7 @@ public class GUI extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(null, team[0].toString() + "\n\n" + team[1].toString() + "\n\n" + team[2].toString() + "\n\nNo. of Plays:  "+ plays +"\n\n\tFinal Score\nOffense " + OffScore + " - " + DefScore + " Defense");
         if(!saveAsked)
         {
-            save = JOptionPane.showConfirmDialog(null, "Would you like to save your team?", "Save Team?", JOptionPane.YES_NO_OPTION);
+            save = JOptionPane.showConfirmDialog(null, "Would you like to save your team details?", "Save Team?", JOptionPane.YES_NO_OPTION);
             if (save == JOptionPane.NO_OPTION)
             {
                 gameScreen.setVisible(false);
