@@ -1,17 +1,23 @@
 import  javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
+import java.util.ArrayList;
 
 
 public class GUI extends JFrame implements ActionListener {
     //Setting required variable to build my GUI
     private JFrame menu = new JFrame();
     private JFrame gameScreen = new JFrame();
+    private JFrame touchdownScreen = new JFrame();
+    private JFrame interceptionScreen = new JFrame();
     private ImageIcon gamePic;
     private ImageIcon pic;
+    private ImageIcon touchPic;
+    private ImageIcon interPic;
     private JLabel imgLable;
     private JLabel gameImgLable;
+    private JLabel touchLable;
+    private JLabel interLable;
     private JMenuBar topMenu = new JMenuBar();
     private JMenuBar playMenu = new JMenuBar();
     private JMenu gameMenu;
@@ -41,28 +47,60 @@ public class GUI extends JFrame implements ActionListener {
         menu.add(imgLable);
         createGameMenu();
         topMenu.add(gameMenu);
-
-
         menu.setVisible(true);
+
+
 
         gameScreen.setTitle("American Football");
         gameScreen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        gameScreen.setSize(1334,599);
+        gameScreen.setSize(933,700);
         Dimension dimen = Toolkit.getDefaultToolkit().getScreenSize();
         gameScreen.setLocation(dimen.width/2-menu.getSize().width/2, dimen.height/2-menu.getSize().height/2);
         //taken from https://stackoverflow.com/questions/2442599/how-to-set-jframe-to-appear-centered-regardless-of-monitor-resolution
         //Opens GUI in the middle of any screen
         gameScreen.setJMenuBar(playMenu);
         gameScreen.setLayout(new FlowLayout());
-        gamePic = new ImageIcon("src//images//field.png");
+        gamePic = new ImageIcon("src//images//playing.jpg");
         //Grabs background from local images folder
         gameImgLable = new JLabel(gamePic);
         gameScreen.add(gameImgLable);
         createPlayMenu();
         playMenu.add(playingMenu);
-
-
         gameScreen.setVisible(false);
+
+
+
+
+        touchdownScreen.setTitle("Touchdown!");
+        touchdownScreen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        touchdownScreen.setSize(1000,600);
+        Dimension dimens = Toolkit.getDefaultToolkit().getScreenSize();
+        touchdownScreen.setLocation(dimens.width/2-menu.getSize().width/2, dimens.height/2-menu.getSize().height/2);
+        //taken from https://stackoverflow.com/questions/2442599/how-to-set-jframe-to-appear-centered-regardless-of-monitor-resolution
+        //Opens GUI in the middle of any screen
+        touchdownScreen.setLayout(new FlowLayout());
+        touchPic = new ImageIcon("src//images//touchdown.jpg");
+        //Grabs background from local images folder
+        touchLable = new JLabel(touchPic);
+        touchdownScreen.add(touchLable);
+        touchdownScreen.setVisible(false);
+
+
+
+
+        interceptionScreen.setTitle("Interception!");
+        interceptionScreen.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        interceptionScreen.setSize(1000,600);
+        Dimension dimensi = Toolkit.getDefaultToolkit().getScreenSize();
+        interceptionScreen.setLocation(dimensi.width/2-menu.getSize().width/2, dimensi.height/2-menu.getSize().height/2);
+        //taken from https://stackoverflow.com/questions/2442599/how-to-set-jframe-to-appear-centered-regardless-of-monitor-resolution
+        //Opens GUI in the middle of any screen
+        interceptionScreen.setLayout(new FlowLayout());
+        interPic = new ImageIcon("src//images//interception.jpg");
+        //Grabs background from local images folder
+        interLable = new JLabel(interPic);
+        interceptionScreen.add(interLable);
+        interceptionScreen.setVisible(false);
 
     }
     private void createGameMenu()
@@ -74,7 +112,7 @@ public class GUI extends JFrame implements ActionListener {
         item = new JMenuItem("New Game");
         item.addActionListener(this);
         gameMenu.add(item);
-        item = new JMenuItem("Load");
+        item = new JMenuItem("Load Team Details");
         item.addActionListener(this);
         gameMenu.add(item);
         gameMenu.addSeparator();
@@ -89,7 +127,7 @@ public class GUI extends JFrame implements ActionListener {
         playingMenu = new JMenu("Game");
         // declare a menu item (re-usable)
         JMenuItem item;
-        item = new JMenuItem("Save");
+        item = new JMenuItem("Save Team Details");
         item.addActionListener(this);
         playingMenu.add(item);
         playingMenu.addSeparator();
@@ -112,7 +150,7 @@ public class GUI extends JFrame implements ActionListener {
             playGame();
         }
 
-        else if (e.getActionCommand().equals("Save"))
+        else if (e.getActionCommand().equals("Save Team Details"))
         {
             try {
                 SaveLoad.saveTeam();
@@ -121,7 +159,7 @@ public class GUI extends JFrame implements ActionListener {
             }
         }
 
-        else if (e.getActionCommand().equals("Load"))
+        else if (e.getActionCommand().equals("Load Team Details"))
         {
             try {
                 SaveLoad.loadTeam();
@@ -133,7 +171,8 @@ public class GUI extends JFrame implements ActionListener {
 
     }
 
-    static Player[] team = new Player[3];
+
+    static ArrayList<Player> team = new ArrayList<>();
 
     public void playGame() {
         int DefScore = 0;
@@ -177,23 +216,23 @@ public class GUI extends JFrame implements ActionListener {
                     QBChoice = Integer.parseInt(QBChoiceAsString);
 
                     if (QBChoice == 1) {
-                        team[j] = new QB("Aaron Rodgers", new Team("Green Bay Packers"), 33, 1.88, 10, 10);
+                        team.add( new QB("Aaron Rodgers", new Team("Green Bay Packers"), 33, 1.88, 10, 10));
                         validChoice = true;
 
                     } else if (QBChoice == 2) {
-                        team[j] = new QB("Tom Brady", new Team("New England Patriots"), 40, 1.93, 8, 10);
+                        team.add( new QB("Tom Brady", new Team("New England Patriots"), 40, 1.93, 8, 10));
                         validChoice = true;
 
                     } else if (QBChoice == 3) {
-                        team[j] = new QB("Eli Manning", new Team("New York Giants"), 36, 1.93, 7, 6);
+                        team.add(new QB("Eli Manning", new Team("New York Giants"), 36, 1.93, 7, 6));
                         validChoice = true;
 
                     } else if (QBChoice == 4) {
-                        team[j] = new QB("Carson Wentz", new Team("Philadelphia Eagles"), 24, 1.96, 7, 8);
+                        team.add(new QB("Carson Wentz", new Team("Philadelphia Eagles"), 24, 1.96, 7, 8));
                         validChoice = true;
 
                     } else if (QBChoice == 5) {
-                        team[j] = new QB("Matt Stafford", new Team("Philadelphia Eagles"), 24, 1.96, 7, 8);
+                        team.add(new QB("Matt Stafford", new Team("Philadelphia Eagles"), 24, 1.96, 7, 8));
                         validChoice = true;
 
                     } else {
@@ -222,19 +261,19 @@ public class GUI extends JFrame implements ActionListener {
                     WRChoice = Integer.parseInt(WRChoiceAsString);
 
                     if (WRChoice == 1) {
-                        team[j] = new receiver("Antonio Brown", new Team("Pittsburgh Steelers"), 29, 1.78, 10, 8);
+                        team.add(new receiver("Antonio Brown", new Team("Pittsburgh Steelers"), 29, 1.78, 10, 8));
                         validChoice = true;
                     } else if (WRChoice == 2) {
-                        team[j] = new receiver("Julio Jones", new Team("Atlanta Falcons"), 28, 1.91, 9, 9);
+                        team.add(new receiver("Julio Jones", new Team("Atlanta Falcons"), 28, 1.91, 9, 9));
                         validChoice = true;
                     } else if (WRChoice == 3) {
-                        team[j] = new receiver("Odell Beckham Jr.", new Team("New York Giants"), 25, 1.8, 10, 9);
+                        team.add(new receiver("Odell Beckham Jr.", new Team("New York Giants"), 25, 1.8, 10, 9));
                         validChoice = true;
                     } else if (WRChoice == 4) {
-                        team[j] = new receiver("A.J. Green", new Team("Cincinnati Bengals"), 29, 1.93, 9, 8);
+                        team.add(new receiver("A.J. Green", new Team("Cincinnati Bengals"), 29, 1.93, 9, 8));
                         validChoice = true;
                     } else if (WRChoice == 5) {
-                        team[j] = new receiver("Dez Bryant", new Team("Dallas Cowboys"), 29, 1.87, 10, 7);
+                        team.add(new receiver("Dez Bryant", new Team("Dallas Cowboys"), 29, 1.87, 10, 7));
                         validChoice = true;
                     } else {
                         JOptionPane.showMessageDialog(null, "Invalid input");
@@ -260,19 +299,19 @@ public class GUI extends JFrame implements ActionListener {
 
                     CBChoice = Integer.parseInt(CBChoiceAsString);
                     if (CBChoice == 1) {
-                        team[j] = new defender("Patrick Peterson", new Team("Arizona Cardinals"), 27, 1.85, 8, 8);
+                        team.add(new defender("Patrick Peterson", new Team("Arizona Cardinals"), 27, 1.85, 8, 8));
                         validChoice = true;
                     } else if (CBChoice == 2) {
-                        team[j] = new defender("Richard Sherman", new Team("Seattle Seahawks"), 29, 1.91, 9, 7);
+                        team.add(new defender("Richard Sherman", new Team("Seattle Seahawks"), 29, 1.91, 9, 7));
                         validChoice = true;
                     } else if (CBChoice == 3) {
-                        team[j] = new defender("Janoris Jenkins", new Team("New York Giants"), 29, 1.78, 7, 8);
+                        team.add(new defender("Janoris Jenkins", new Team("New York Giants"), 29, 1.78, 7, 8));
                         validChoice = true;
                     } else if (CBChoice == 4) {
-                        team[j] = new defender("Aqib Talib", new Team("Denver Broncos"), 31, 1.85, 8, 7);
+                        team.add(new defender("Aqib Talib", new Team("Denver Broncos"), 31, 1.85, 8, 7));
                         validChoice = true;
                     } else if (CBChoice == 5) {
-                        team[j] = new defender("Chris Harris Jr.", new Team("Denver Broncos"), 28, 1.78, 10, 8);
+                        team.add(new defender("Chris Harris Jr.", new Team("Denver Broncos"), 28, 1.78, 10, 8));
                         validChoice = true;
                     } else {
                         JOptionPane.showMessageDialog(null, "Invalid input");
@@ -284,8 +323,11 @@ public class GUI extends JFrame implements ActionListener {
 
         while (OffScore < 5 && DefScore < 5) {
 
-            int offSkill = team[0].getOffSkill(team[1]);
-            int defSkill = team[2].getDefSkill();
+            int offSkill = team.get(0).getOffSkill(team.get(1));
+            int defSkill = team.get(2).getDefSkill();
+            gameScreen.setVisible(true);
+            interceptionScreen.setVisible(false);
+            touchdownScreen.setVisible(false);
             int reply = JOptionPane.showConfirmDialog(null, "Would you like to run a play?", "Run Play", JOptionPane.YES_NO_OPTION);
 
             if (reply == JOptionPane.NO_OPTION) {
@@ -312,25 +354,37 @@ public class GUI extends JFrame implements ActionListener {
                 if (offSkill > defSkill) {
 
                     if ((int) ((Math.random() * 10) + 1) > 2) {
+                        gameScreen.setVisible(false);
+                        touchdownScreen.setVisible(true);
                         JOptionPane.showMessageDialog(null, "Touchdown!");
                         OffScore++;
                     } else {
+                        gameScreen.setVisible(false);
+                        interceptionScreen.setVisible(true);
                         JOptionPane.showMessageDialog(null, "Interception!");
                         DefScore++;
                     }
                 } else if (offSkill < defSkill) {
                     if ((int) ((Math.random() * 10) + 1) > 2) {
+                        gameScreen.setVisible(false);
+                        interceptionScreen.setVisible(true);
                         JOptionPane.showMessageDialog(null, "Interception!");
                         DefScore++;
                     } else {
+                        gameScreen.setVisible(false);
+                        touchdownScreen.setVisible(true);
                         JOptionPane.showMessageDialog(null, "Touchdown!");
                         OffScore++;
                     }
                 } else if (offSkill == defSkill) {
+                    gameScreen.setVisible(false);
+                    interceptionScreen.setVisible(true);
                     if ((int) ((Math.random() * 10) + 1) > 5) {
                         JOptionPane.showMessageDialog(null, "Interception!");
                         DefScore++;
                     } else {
+                        gameScreen.setVisible(false);
+                        touchdownScreen.setVisible(true);
                         JOptionPane.showMessageDialog(null, "Touchdown!");
                         OffScore++;
                     }
@@ -340,7 +394,10 @@ public class GUI extends JFrame implements ActionListener {
             }
         }
 
-        JOptionPane.showMessageDialog(null, team[0].toString() + "\n\n" + team[1].toString() + "\n\n" + team[2].toString() + "\n\nNo. of Plays:  "+ plays +"\n\n\tFinal Score\nOffense " + OffScore + " - " + DefScore + " Defense");
+        touchdownScreen.setVisible(false);
+        interceptionScreen.setVisible(false);
+
+        JOptionPane.showMessageDialog(null, team.get(0).toString() + "\n\n" + team.get(1).toString() + "\n\n" + team.get(2).toString() + "\n\nNo. of Plays:  "+ plays +"\n\n\tFinal Score\nOffense " + OffScore + " - " + DefScore + " Defense");
         if(!saveAsked)
         {
             save = JOptionPane.showConfirmDialog(null, "Would you like to save your team details?", "Save Team?", JOptionPane.YES_NO_OPTION);
@@ -355,7 +412,7 @@ public class GUI extends JFrame implements ActionListener {
                 try {
                     SaveLoad.saveTeam();
                 } catch (Exception e1) {
-                    JOptionPane.showMessageDialog(null, "Error!");
+                    JOptionPane.showMessageDialog(null, "Error Saving!");
                 }
                 gameScreen.setVisible(false);
                 menu.setVisible(true);

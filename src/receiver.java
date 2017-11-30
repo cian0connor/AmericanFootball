@@ -1,4 +1,6 @@
-public class receiver extends Player {
+import java.io.Serializable;
+
+public class receiver extends Player implements Serializable {
 
     private int catching;
     private int speed;

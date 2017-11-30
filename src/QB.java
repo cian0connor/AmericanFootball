@@ -1,4 +1,6 @@
-public class QB extends Player {
+import java.io.Serializable;
+
+public class QB extends Player implements Serializable {
 
     private int throwingPower;
     private int throwingAccuracy;

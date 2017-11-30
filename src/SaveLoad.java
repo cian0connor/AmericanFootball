@@ -1,11 +1,10 @@
 import java.io.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 
 
-/**
- * Created by t00196273 on 29/11/2017.
- */
+
 public class SaveLoad {
     public static void saveTeam() throws Exception
     {
@@ -23,10 +22,11 @@ public class SaveLoad {
         FileInputStream loadFileStream = new FileInputStream(loadFile);
         ObjectInputStream loadStream = new ObjectInputStream(loadFileStream);
         //Got Code from https://stackoverflow.com/questions/16111496/java-how-can-i-write-my-arraylist-to-a-file-and-read-load-that-file-to-the
-        Player[] team = (Player[]) loadStream.readObject();
+        ArrayList<Player> team = (ArrayList<Player>) loadStream.readObject();
         String display = "";
         for(Player p : team) {
             display += p.toString();
+            display += "\n\n";
         }
         JOptionPane.showMessageDialog(null, display);
         loadStream.close();

@@ -1,4 +1,6 @@
-public class Team {
+import java.io.Serializable;
+
+public class Team implements Serializable {
     private String teamName;
 
     public Team(String teamName)

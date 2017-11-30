@@ -1,4 +1,6 @@
-public abstract class Player implements Interface {
+import java.io.Serializable;
+
+public abstract class Player implements Interface, Serializable {
     private String name;
     private Team team;
     private int age;

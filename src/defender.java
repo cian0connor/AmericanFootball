@@ -1,4 +1,6 @@
-public class defender extends Player {
+import java.io.Serializable;
+
+public class defender extends Player implements Serializable {
     private int covering;
     private int speed;
 
