@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 public class GUI extends JFrame implements ActionListener {
-    //Setting required variable to build my GUI
+    //Setting required variables to build my GUI
     private JFrame menu = new JFrame();
     private JFrame gameScreen = new JFrame();
     private JFrame touchdownScreen = new JFrame();
@@ -24,11 +24,10 @@ public class GUI extends JFrame implements ActionListener {
     private JMenu playingMenu;
 
 
-    public static void main(String[] args) {
-        new GUI();
-        //Building my GUI
-    }
 
+    /**
+     * Method used to build my GUI
+     * **/
     public GUI()
     {
 
@@ -103,12 +102,17 @@ public class GUI extends JFrame implements ActionListener {
         interceptionScreen.setVisible(false);
 
     }
+
+    /**
+     * Method used to build the menu for the main menu screen
+     */
     private void createGameMenu()
     {
         // create the menu
         gameMenu = new JMenu("Game");
         // declare a menu item (re-usable)
         JMenuItem item;
+        // adding menu tabs
         item = new JMenuItem("New Game");
         item.addActionListener(this);
         gameMenu.add(item);
@@ -121,12 +125,16 @@ public class GUI extends JFrame implements ActionListener {
         gameMenu.add(item);
     }
 
+    /**
+     * Method used to build the menu for the playing screen
+     */
     private void createPlayMenu()
     {
         // create the menu
         playingMenu = new JMenu("Game");
         // declare a menu item (re-usable)
         JMenuItem item;
+        // adding menu tabs
         item = new JMenuItem("Save Team Details");
         item.addActionListener(this);
         playingMenu.add(item);
@@ -136,7 +144,11 @@ public class GUI extends JFrame implements ActionListener {
         playingMenu.add(item);
     }
 
+    /**
+     * Method used to build the menu for the playing screen
+     */
     public void actionPerformed (ActionEvent e) {
+        // adding event listeners for menu tab commands
         if (e.getActionCommand().equals ("Quit"))
         {
             menu.setVisible(false);
@@ -152,10 +164,11 @@ public class GUI extends JFrame implements ActionListener {
 
         else if (e.getActionCommand().equals("Save Team Details"))
         {
+            //trying to save team details using my SaveLoad class
             try {
                 SaveLoad.saveTeam();
             } catch (Exception e1) {
-                JOptionPane.showMessageDialog(null, "Error!");
+                JOptionPane.showMessageDialog(null, "Error Saving!");
             }
         }
 
@@ -164,7 +177,7 @@ public class GUI extends JFrame implements ActionListener {
             try {
                 SaveLoad.loadTeam();
             } catch (Exception e1) {
-                JOptionPane.showMessageDialog(null, "Error!");
+                JOptionPane.showMessageDialog(null, "Error Loading!");
             }
         }
 
@@ -172,66 +185,73 @@ public class GUI extends JFrame implements ActionListener {
     }
 
 
+    //Array list built to store player objects as team
     static ArrayList<Player> team = new ArrayList<>();
 
+    /**
+     * Method used to run the game and populate my array list of players
+     */
+    //creating array list to save my team as player objects
     public void playGame() {
-        int DefScore = 0;
-        int OffScore = 0;
+        /*variables used to allow the use to populate
+        and validate the array*/
+        int defScore = 0;
+        int offScore = 0;
         int plays = 0;
-        int QBChoice;
-        int WRChoice;
-        int CBChoice;
+        int qbChoice;
+        int wrChoice;
+        int cbChoice;
         int save;
         boolean saveAsked = false;
-        String QBChoiceAsString;
-        String WRChoiceAsString;
-        String CBChoiceAsString;
+        String qbChoiceAsString;
+        String wrChoiceAsString;
+        String cbChoiceAsString;
 
 
-
+        //for loop populates the array list based on the choices of the user to make your team
         for (int j = 0; j < 3; j++) {
             if (j == 0) {
                 boolean validChoice = false;
-
+                //validation on user entries
                 while (!validChoice) {
 
 
-                    QBChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
+                    qbChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
 
-                    while(QBChoiceAsString == null)
+                    while(qbChoiceAsString == null)
                     {
-                        QBChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
+                        qbChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
                     }
 
-                    while (!QBChoiceAsString.equals("1") && !QBChoiceAsString.equals("2") && !QBChoiceAsString.equals("3") && !QBChoiceAsString.equals("4") && !QBChoiceAsString.equals("5"))
+                    while (!qbChoiceAsString.equals("1") && !qbChoiceAsString.equals("2") && !qbChoiceAsString.equals("3") && !qbChoiceAsString.equals("4") && !qbChoiceAsString.equals("5"))
                     {
 
                         JOptionPane.showMessageDialog(null, "Invalid input");
 
-                        QBChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
+                        qbChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
 
 
                     }
 
-                    QBChoice = Integer.parseInt(QBChoiceAsString);
+                    qbChoice = Integer.parseInt(qbChoiceAsString);
 
-                    if (QBChoice == 1) {
+                    if (qbChoice == 1) {
                         team.add( new QB("Aaron Rodgers", new Team("Green Bay Packers"), 33, 1.88, 10, 10));
                         validChoice = true;
 
-                    } else if (QBChoice == 2) {
+                    } else if (qbChoice == 2) {
                         team.add( new QB("Tom Brady", new Team("New England Patriots"), 40, 1.93, 8, 10));
                         validChoice = true;
 
-                    } else if (QBChoice == 3) {
+                    } else if (qbChoice == 3) {
                         team.add(new QB("Eli Manning", new Team("New York Giants"), 36, 1.93, 7, 6));
                         validChoice = true;
 
-                    } else if (QBChoice == 4) {
+                    } else if (qbChoice == 4) {
                         team.add(new QB("Carson Wentz", new Team("Philadelphia Eagles"), 24, 1.96, 7, 8));
                         validChoice = true;
 
-                    } else if (QBChoice == 5) {
+                    } else if (qbChoice == 5) {
                         team.add(new QB("Matt Stafford", new Team("Philadelphia Eagles"), 24, 1.96, 7, 8));
                         validChoice = true;
 
@@ -243,37 +263,37 @@ public class GUI extends JFrame implements ActionListener {
             } else if (j == 1) {
                 boolean validChoice = false;
                 while (!validChoice) {
-                    WRChoiceAsString = JOptionPane.showInputDialog("Please select your Receiver\n\n" + "1.Antonio Brown\n" + "2.Julio Jones\n" + "3.Odell Beckham Jr.\n" + "4.A.J. Green\n" + "5.Dez Bryant\n");
+                    wrChoiceAsString = JOptionPane.showInputDialog("Please select your Receiver\n\n" + "1.Antonio Brown\n" + "2.Julio Jones\n" + "3.Odell Beckham Jr.\n" + "4.A.J. Green\n" + "5.Dez Bryant\n");
 
-                    while(WRChoiceAsString == null)
+                    while(wrChoiceAsString == null)
                     {
-                        WRChoiceAsString = JOptionPane.showInputDialog("Please select your Receiver\n\n" + "1.Antonio Brown\n" + "2.Julio Jones\n" + "3.Odell Beckham Jr.\n" + "4.A.J. Green\n" + "5.Dez Bryant\n");
+                        wrChoiceAsString = JOptionPane.showInputDialog("Please select your Receiver\n\n" + "1.Antonio Brown\n" + "2.Julio Jones\n" + "3.Odell Beckham Jr.\n" + "4.A.J. Green\n" + "5.Dez Bryant\n");
                     }
-                    while (!WRChoiceAsString.equals("1") && !WRChoiceAsString.equals("2") && !WRChoiceAsString.equals("3") && !WRChoiceAsString.equals("4") && !WRChoiceAsString.equals("5"))
+                    while (!wrChoiceAsString.equals("1") && !wrChoiceAsString.equals("2") && !wrChoiceAsString.equals("3") && !wrChoiceAsString.equals("4") && !wrChoiceAsString.equals("5"))
                     {
 
                         JOptionPane.showMessageDialog(null, "Invalid input");
 
-                        WRChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
+                        wrChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
 
                     }
 
-                    WRChoice = Integer.parseInt(WRChoiceAsString);
+                    wrChoice = Integer.parseInt(wrChoiceAsString);
 
-                    if (WRChoice == 1) {
-                        team.add(new receiver("Antonio Brown", new Team("Pittsburgh Steelers"), 29, 1.78, 10, 8));
+                    if (wrChoice == 1) {
+                        team.add(new Receiver("Antonio Brown", new Team("Pittsburgh Steelers"), 29, 1.78, 10, 8));
                         validChoice = true;
-                    } else if (WRChoice == 2) {
-                        team.add(new receiver("Julio Jones", new Team("Atlanta Falcons"), 28, 1.91, 9, 9));
+                    } else if (wrChoice == 2) {
+                        team.add(new Receiver("Julio Jones", new Team("Atlanta Falcons"), 28, 1.91, 9, 9));
                         validChoice = true;
-                    } else if (WRChoice == 3) {
-                        team.add(new receiver("Odell Beckham Jr.", new Team("New York Giants"), 25, 1.8, 10, 9));
+                    } else if (wrChoice == 3) {
+                        team.add(new Receiver("Odell Beckham Jr.", new Team("New York Giants"), 25, 1.8, 10, 9));
                         validChoice = true;
-                    } else if (WRChoice == 4) {
-                        team.add(new receiver("A.J. Green", new Team("Cincinnati Bengals"), 29, 1.93, 9, 8));
+                    } else if (wrChoice == 4) {
+                        team.add(new Receiver("A.J. Green", new Team("Cincinnati Bengals"), 29, 1.93, 9, 8));
                         validChoice = true;
-                    } else if (WRChoice == 5) {
-                        team.add(new receiver("Dez Bryant", new Team("Dallas Cowboys"), 29, 1.87, 10, 7));
+                    } else if (wrChoice == 5) {
+                        team.add(new Receiver("Dez Bryant", new Team("Dallas Cowboys"), 29, 1.87, 10, 7));
                         validChoice = true;
                     } else {
                         JOptionPane.showMessageDialog(null, "Invalid input");
@@ -282,36 +302,36 @@ public class GUI extends JFrame implements ActionListener {
             } else if (j == 2) {
                 boolean validChoice = false;
                 while (!validChoice) {
-                    CBChoiceAsString = JOptionPane.showInputDialog("Please select your Defender\n\n" + "1.Patrick Peterson\n" + "2.Richard Sherman\n" + "3.Janoris Jenkins\n" + "4.Aqib Talib\n" + "5.Chris Harris Jr.\n");
+                    cbChoiceAsString = JOptionPane.showInputDialog("Please select your Defender\n\n" + "1.Patrick Peterson\n" + "2.Richard Sherman\n" + "3.Janoris Jenkins\n" + "4.Aqib Talib\n" + "5.Chris Harris Jr.\n");
 
-                    while(CBChoiceAsString == null)
+                    while(cbChoiceAsString == null)
                     {
-                        CBChoiceAsString = JOptionPane.showInputDialog("Please select your Receiver\n\n" + "1.Antonio Brown\n" + "2.Julio Jones\n" + "3.Odell Beckham Jr.\n" + "4.A.J. Green\n" + "5.Dez Bryant\n");
+                        cbChoiceAsString = JOptionPane.showInputDialog("Please select your Receiver\n\n" + "1.Antonio Brown\n" + "2.Julio Jones\n" + "3.Odell Beckham Jr.\n" + "4.A.J. Green\n" + "5.Dez Bryant\n");
                     }
-                    while (!CBChoiceAsString.equals("1") && !CBChoiceAsString.equals("2") && !CBChoiceAsString.equals("3") && !CBChoiceAsString.equals("4") && !CBChoiceAsString.equals("5"))
+                    while (!cbChoiceAsString.equals("1") && !cbChoiceAsString.equals("2") && !cbChoiceAsString.equals("3") && !cbChoiceAsString.equals("4") && !cbChoiceAsString.equals("5"))
                     {
 
                         JOptionPane.showMessageDialog(null, "Invalid input");
 
-                        CBChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
+                        cbChoiceAsString = JOptionPane.showInputDialog("Please select your QB\n\n" + "1.Aaron Rodgers\n" + "2.Tom Brady\n" + "3.Eli Manning\n" + "4.Carson Wentz\n" + "5.Matt Stafford\n");
 
                     }
 
-                    CBChoice = Integer.parseInt(CBChoiceAsString);
-                    if (CBChoice == 1) {
-                        team.add(new defender("Patrick Peterson", new Team("Arizona Cardinals"), 27, 1.85, 8, 8));
+                    cbChoice = Integer.parseInt(cbChoiceAsString);
+                    if (cbChoice == 1) {
+                        team.add(new Defender("Patrick Peterson", new Team("Arizona Cardinals"), 27, 1.85, 8, 8));
                         validChoice = true;
-                    } else if (CBChoice == 2) {
-                        team.add(new defender("Richard Sherman", new Team("Seattle Seahawks"), 29, 1.91, 9, 7));
+                    } else if (cbChoice == 2) {
+                        team.add(new Defender("Richard Sherman", new Team("Seattle Seahawks"), 29, 1.91, 9, 7));
                         validChoice = true;
-                    } else if (CBChoice == 3) {
-                        team.add(new defender("Janoris Jenkins", new Team("New York Giants"), 29, 1.78, 7, 8));
+                    } else if (cbChoice == 3) {
+                        team.add(new Defender("Janoris Jenkins", new Team("New York Giants"), 29, 1.78, 7, 8));
                         validChoice = true;
-                    } else if (CBChoice == 4) {
-                        team.add(new defender("Aqib Talib", new Team("Denver Broncos"), 31, 1.85, 8, 7));
+                    } else if (cbChoice == 4) {
+                        team.add(new Defender("Aqib Talib", new Team("Denver Broncos"), 31, 1.85, 8, 7));
                         validChoice = true;
-                    } else if (CBChoice == 5) {
-                        team.add(new defender("Chris Harris Jr.", new Team("Denver Broncos"), 28, 1.78, 10, 8));
+                    } else if (cbChoice == 5) {
+                        team.add(new Defender("Chris Harris Jr.", new Team("Denver Broncos"), 28, 1.78, 10, 8));
                         validChoice = true;
                     } else {
                         JOptionPane.showMessageDialog(null, "Invalid input");
@@ -321,16 +341,18 @@ public class GUI extends JFrame implements ActionListener {
 
         }
 
-        while (OffScore < 5 && DefScore < 5) {
+        while (offScore < 5 && defScore < 5) {
 
             int offSkill = team.get(0).getOffSkill(team.get(1));
             int defSkill = team.get(2).getDefSkill();
             gameScreen.setVisible(true);
             interceptionScreen.setVisible(false);
             touchdownScreen.setVisible(false);
+            //validation to make sure the user wants to simulate another play
             int reply = JOptionPane.showConfirmDialog(null, "Would you like to run a play?", "Run Play", JOptionPane.YES_NO_OPTION);
 
             if (reply == JOptionPane.NO_OPTION) {
+                //validation to make sure the user isn't asked if they want to save twice
                 save = JOptionPane.showConfirmDialog(null,"Would you like to save your team details?","Save Team?",JOptionPane.YES_NO_OPTION);
                 saveAsked = true;
                 if (save == JOptionPane.NO_OPTION)
@@ -357,47 +379,47 @@ public class GUI extends JFrame implements ActionListener {
                         gameScreen.setVisible(false);
                         touchdownScreen.setVisible(true);
                         JOptionPane.showMessageDialog(null, "Touchdown!");
-                        OffScore++;
+                        offScore++;
                     } else {
                         gameScreen.setVisible(false);
                         interceptionScreen.setVisible(true);
                         JOptionPane.showMessageDialog(null, "Interception!");
-                        DefScore++;
+                        defScore++;
                     }
                 } else if (offSkill < defSkill) {
                     if ((int) ((Math.random() * 10) + 1) > 2) {
                         gameScreen.setVisible(false);
                         interceptionScreen.setVisible(true);
                         JOptionPane.showMessageDialog(null, "Interception!");
-                        DefScore++;
+                        defScore++;
                     } else {
                         gameScreen.setVisible(false);
                         touchdownScreen.setVisible(true);
                         JOptionPane.showMessageDialog(null, "Touchdown!");
-                        OffScore++;
+                        offScore++;
                     }
                 } else if (offSkill == defSkill) {
                     gameScreen.setVisible(false);
                     interceptionScreen.setVisible(true);
                     if ((int) ((Math.random() * 10) + 1) > 5) {
                         JOptionPane.showMessageDialog(null, "Interception!");
-                        DefScore++;
+                        defScore++;
                     } else {
                         gameScreen.setVisible(false);
                         touchdownScreen.setVisible(true);
                         JOptionPane.showMessageDialog(null, "Touchdown!");
-                        OffScore++;
+                        offScore++;
                     }
                 }
 
-                JOptionPane.showMessageDialog(null, "\tScore\nOffense " + OffScore + " - " + DefScore + " Defense");
+                JOptionPane.showMessageDialog(null, "\tScore\nOffense " + offScore + " - " + defScore + " Defense");
             }
         }
 
         touchdownScreen.setVisible(false);
         interceptionScreen.setVisible(false);
 
-        JOptionPane.showMessageDialog(null, team.get(0).toString() + "\n\n" + team.get(1).toString() + "\n\n" + team.get(2).toString() + "\n\nNo. of Plays:  "+ plays +"\n\n\tFinal Score\nOffense " + OffScore + " - " + DefScore + " Defense");
+        JOptionPane.showMessageDialog(null, team.get(0).toString() + "\n\n" + team.get(1).toString() + "\n\n" + team.get(2).toString() + "\n\nNo. of Plays:  "+ plays +"\n\n\tFinal Score\nOffense " + offScore + " - " + defScore + " Defense");
         if(!saveAsked)
         {
             save = JOptionPane.showConfirmDialog(null, "Would you like to save your team details?", "Save Team?", JOptionPane.YES_NO_OPTION);

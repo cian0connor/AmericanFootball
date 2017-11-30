@@ -1,10 +1,10 @@
 import java.io.Serializable;
 
-public class defender extends Player implements Serializable {
+public class Defender extends Player implements Serializable {
     private int covering;
     private int speed;
 
-    public defender(String name, Team team, int age, double height, int covering, int speed)
+    public Defender(String name, Team team, int age, double height, int covering, int speed)
     {
         super(name,team,age,height);
         this.covering = covering;
@@ -16,10 +16,6 @@ public class defender extends Player implements Serializable {
         return covering;
     }
 
-    public void setCatching(int covering)
-    {
-        this.covering = covering;
-    }
 
     public int getSpeed()
     {

@@ -84,11 +84,19 @@ public abstract class Player implements Interface, Serializable {
         return covering;
     }
 
+
+    /**
+     * Gets Qbs and receivers unique parameters and gives them an offensive score
+     */
     public int getOffSkill(Player y)
     {
         int offSkill = ((this.getThrowingPower() + this.getThrowingAccuracy()) + (y.getCatching()+y.getSpeed()));
         return offSkill;
     }
+
+    /**
+     * Gets defenders unique parameters and gives them a defensive score
+     */
 
     public int getDefSkill()
     {

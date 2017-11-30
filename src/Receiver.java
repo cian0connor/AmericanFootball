@@ -1,11 +1,11 @@
 import java.io.Serializable;
 
-public class receiver extends Player implements Serializable {
+public class Receiver extends Player implements Serializable {
 
     private int catching;
     private int speed;
 
-    public receiver(String name, Team team, int age, double height, int catching, int speed)
+    public Receiver(String name, Team team, int age, double height, int catching, int speed)
     {
         super(name,team,age,height);
         this.catching = catching;
